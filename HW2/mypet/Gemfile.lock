@@ -1,0 +1,17 @@
+PATH
+  remote: htmlgen
+  specs:
+    htmlgen (0.1.0)
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  htmlgen!
+
+BUNDLED WITH
+   2.2.0.rc.2

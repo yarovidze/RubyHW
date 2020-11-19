@@ -1,18 +1,42 @@
 require_relative 'my_pet'
+require_relative 'htmlgen/lib/htmlgen'
 
 class Pet
-  ACTIONS = { 'give a meal': 1, 'lets play': 2, 'stay at home': 3, 'go to groomer': 4, 'bathing': 5, 'walk on the street': 6, 'lets sleep': 7, 'look at the pet': 8, 'go to veterinarian': 9, 'about pet': 10, exit: 11 }
+  ACTIONS = {'give a meal': 1, 'lets play': 2, 'stay at home': 3, 'go to groomer': 4, 'bathing': 5, 'walk on the street': 6, 'lets sleep': 7, 'look at the pet': 8, 'go to veterinarian': 9, 'about pet': 10, exit: 11}
 
   def start
     create_pet
 
     while true
-      if (@die == true )
+      if @die == true
         p 'Your pet has died. Game over'
+        @emoji_status = '&#x2620'
         break
+      else
+        @emoji_status = '&#x1F60E'
       end
 
       action = enter_action
+      content = "
+        <header>
+          <h2>Hello!! My name is: #{@pet.name}</h2>
+          <h2>I am a #{@pet.animal} #{@emoji}</h2>
+        </header>
+        <section>
+          <h3>This is my characteristics:</h3>
+            <ul>
+              <li>I am <strong>#{@pet.age}</strong> years old</li>
+              <li>#{@pet.mood}</li>
+              <li>Health level: <strong>#{@pet.health}</strong></li>
+              <li>Clean level is: <strong>#{@pet.clean}</strong></li>
+              <li>Sleep level is: <strong>#{@pet.sleep}</strong></li>
+              <li>Hair level is: <strong>#{@pet.pet_hair}</strong></li>
+              <li>Im hungry on: <strong>#{@pet.hungry}</strong></li>
+            </ul>
+          <h4>Life status: #{die_status}</h4>
+        </section>
+      "
+      HtmlContent.createHtml(content)
       case action
       when 1
         @pet.eat
@@ -43,28 +67,39 @@ class Pet
   end
 
   def create_pet
-    puts 'name? '
+    puts 'Give your pet a name: '
     name = gets.chomp
     puts 'Choose what pet do you want, cat or dog?'
-    animal = gets.chomp
+    animal = gets.chomp.downcase
     if animal == 'dog'
       puts 'haffff hafff'
       puts "I'm your new friend. I'm #{animal}, #{name}. What do we do"
-      @pet = MyPet.new(name)
+      @emoji = '&#x1F415'
+      @pet = MyPet.new(name, animal)
     elsif animal == 'cat'
       puts 'myau myau'
       puts "I'm your new friend. I'm #{animal}, #{name}. What do we do"
-      @pet = MyPet.new(name)
+      @pet = MyPet.new(name, animal)
+      @emoji = '&#x1F63A'
     else
       puts 'Who are you?'
     end
 
   end
 
+  def  die_status
+    if @die == true
+      p 'Your pet has died. Game over'
+      @emoji_status = '&#x2620'
+    else
+      @emoji_status = '&#x1F60E'
+    end
+  end
+
 
   def enter_action
     puts 'Pleas choose action : '
-    ACTIONS.each_pair {|key, value| puts "#{value}: #{key}" }
+    ACTIONS.each_pair { |key, value| puts "#{value}: #{key}" }
     action = gets.to_i
   end
 

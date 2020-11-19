@@ -1,0 +1,3 @@
+[submodule "htmlgen"]
+	path = htmlgen
+	url = https://github.com/yarovidze/htmlgen
