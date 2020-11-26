@@ -1,10 +1,17 @@
+require "yaml"
+
+
 class MyPet
   attr_accessor :name
   attr_accessor :animal
+  attr_accessor :role
+  attr_accessor :username
 
-  def initialize (name, animal)
+  def initialize (name, animal, role, username)
     @animal = animal
     @name = name
+    @role = role
+    @username = username
     @age = 0
     @healthy_level = 10
     @mood_level = 7
@@ -29,11 +36,7 @@ class MyPet
   end
 
   def mood
-    if @mood_level > 5
-      p "Im Happy"
-    else
-      p "I have bad mood"
-    end
+    mood = @mood_level
   end
 
   def clean
@@ -165,6 +168,69 @@ class MyPet
     else
       @die == false
     end
+  end
+
+  def change_name
+    if @role == "admin" || @role == "superadmin"
+      puts "Please input new pet name:"
+      @name = gets.chomp
+      p "New pet name is #{@name}"
+    else
+      p "You dont have permissions for this"
+    end
+  end
+
+  def change_type
+    if @role == "admin" || @role == "superadmin"
+      puts "Please input new type of pet:"
+      @animal = gets.chomp
+      p "Now your pet is #{@animal}"
+    else
+      p "You dont have permissions for this"
+    end
+  end
+
+  def reset_to_default
+    if @role == "superadmin"
+      puts "Now your characteristics reset to default value"
+      @age = 0
+      @healthy_level = 10
+      @mood_level = 7
+      @hungry_level = 2
+      @sleep_level = 5
+      @clean_level = 5
+      @pet_hair_level = 0
+      @toilet_status = false
+    else
+      p "You dont have permissions for this"
+    end
+  end
+
+  def kill
+    if @role == "superadmin"
+      @die == true
+      p "You killed your pet"
+    else
+      p "You dont have permissions for this"
+    end
+  end
+
+  def save_to_data
+    save_data = [pet_type: @animal,
+                 pet_name: @name,
+                 username: @username,
+                 role: @role,
+                 characteristics: [{age: @age,
+                                    mood: @mood_level,
+                                    health: @healthy_level,
+                                    hungry: @hungry_level,
+                                    sleep: @sleep_level,
+                                    claen: @clean_level,
+                                    hair: @pet_hair_level,
+                                    toilet: @toilet_status}],
+    ]
+
+    File.open("user.yml", "w") { |file| file.write(save_data.to_yaml) }
   end
 
 

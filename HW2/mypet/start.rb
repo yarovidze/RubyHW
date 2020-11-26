@@ -1,11 +1,30 @@
 require_relative 'my_pet'
 require_relative 'htmlgen/lib/htmlgen'
+require "yaml"
+
+USERDATA = [
+    {
+        name: "nameadmin",
+        pass: "1",
+        role: "admin"
+    },
+    {
+        name: "namesadmin",
+        pass: "12",
+        role: "superadmin"
+    }
+]
 
 class Pet
-  ACTIONS = {'give a meal': 1, 'lets play': 2, 'stay at home': 3, 'go to groomer': 4, 'bathing': 5, 'walk on the street': 6, 'lets sleep': 7, 'look at the pet': 8, 'go to veterinarian': 9, 'about pet': 10, exit: 11}
+
+  ACTIONS = {'give a meal': 1, 'lets play': 2, 'stay at home': 3, 'go to groomer': 4, 'bathing': 5, 'walk on the street': 6, 'lets sleep': 7, 'look at the pet': 8, 'go to veterinarian': 9, 'about pet': 10, exit: 11,
+             'change name':12, 'change type':13, 'reset to default':14, 'kill pet':15,
+  }
 
   def start
+    login
     create_pet
+    @pet.save_to_data
 
     while true
       if @die == true
@@ -19,14 +38,14 @@ class Pet
       action = enter_action
       content = "
         <header>
-          <h2>Hello!! My name is: #{@pet.name}</h2>
+          <h2>Hello!! My name is: #{@name}</h2>
           <h2>I am a #{@pet.animal} #{@emoji}</h2>
         </header>
         <section>
           <h3>This is my characteristics:</h3>
             <ul>
               <li>I am <strong>#{@pet.age}</strong> years old</li>
-              <li>#{@pet.mood}</li>
+              <li>Mood level: <strong>#{@pet.mood}</strong></li>
               <li>Health level: <strong>#{@pet.health}</strong></li>
               <li>Clean level is: <strong>#{@pet.clean}</strong></li>
               <li>Sleep level is: <strong>#{@pet.sleep}</strong></li>
@@ -58,6 +77,14 @@ class Pet
         @pet.veterinarian
       when 10
         p @pet
+      when 12
+        @pet.change_name
+      when 13
+        @pet.change_type
+      when 14
+        @pet.reset_to_default
+      when 15
+        @pet.kill
       when 11
         break
       else
@@ -66,20 +93,40 @@ class Pet
     end
   end
 
+  def login
+    puts "Please enter your username and password to start"
+    puts "Enter your name:"
+    login_name = gets.chomp
+    exit if login_name == "exit"
+    puts "Enter your password:"
+    login_pass = gets.chomp
+
+    user = USERDATA.find { |f| f[:name] == login_name && f[:pass] == login_pass }
+    if user.nil?
+      @username = "guest"
+      @role = "guest"
+      puts "Undefined user. Continue as #{@username}"
+    else
+      @role = user[:role]
+      @username = user[:name]
+      puts "You logged in as #{@role}"
+    end
+  end
+
   def create_pet
     puts 'Give your pet a name: '
-    name = gets.chomp
+    @name = gets.chomp
     puts 'Choose what pet do you want, cat or dog?'
     animal = gets.chomp.downcase
     if animal == 'dog'
       puts 'haffff hafff'
-      puts "I'm your new friend. I'm #{animal}, #{name}. What do we do"
+      puts "I'm your new friend. I'm #{animal}, #{@name}. What do we do"
       @emoji = '&#x1F415'
-      @pet = MyPet.new(name, animal)
+      @pet = MyPet.new(@name, animal, @role, @username)
     elsif animal == 'cat'
       puts 'myau myau'
-      puts "I'm your new friend. I'm #{animal}, #{name}. What do we do"
-      @pet = MyPet.new(name, animal)
+      puts "I'm your new friend. I'm #{animal}, #{@name}. What do we do"
+      @pet = MyPet.new(@name, animal, @role, @username)
       @emoji = '&#x1F63A'
     else
       puts 'Who are you?'

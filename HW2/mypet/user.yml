@@ -1,0 +1,14 @@
+---
+- :pet_type: dog
+  :pet_name: dad
+  :username: nameadmin
+  :role: admin
+  :characteristics:
+  - :age: 0
+    :mood: 7
+    :health: 10
+    :hungry: 2
+    :sleep: 5
+    :claen: 5
+    :hair: 0
+    :toilet: false
