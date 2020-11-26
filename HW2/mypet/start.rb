@@ -19,7 +19,7 @@ class Pet
 
   ACTIONS = {'give a meal': 1, 'lets play': 2, 'stay at home': 3, 'go to groomer': 4, 'bathing': 5, 'walk on the street': 6, 'lets sleep': 7, 'look at the pet': 8, 'go to veterinarian': 9, 'about pet': 10, exit: 11,
              'change name':12, 'change type':13, 'reset to default':14, 'kill pet':15,
-  }
+  }.freeze
 
   def start
     login

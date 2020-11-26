@@ -1,6 +1,6 @@
 ---
-- :pet_type: dog
-  :pet_name: dad
+- :pet_type: cat
+  :pet_name: qaz
   :username: nameadmin
   :role: admin
   :characteristics:
