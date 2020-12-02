@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tamagotchi game</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body class="container">
+<header>
+  <h2>Hi your DOG was born, his name: <%= get('pet_name') %></h2>
+</header>
+<main>
+  <section class="wrap" >
+    <div class="characteristics">
+    <ul>
+      <li>Healthy: <strong><%= get('healthy_level') %></strong></li>
+      <li>Mood: <strong><%= get('mood_level') %></strong></li>
+      <li>Hungry: <strong><%= get('hungry_level') %></strong></li>
+      <li>Sleep: <strong><%= get('sleep_level') %></strong></li>
+      <li>Clean: <strong><%= get('clean_level') %></strong></li>
+      <li>Pet hair: <strong><%= get('pet_hair_level') %></strong></li>
+    </ul>
+    <form action="/action" method="get">
+      <button type="submit" class="btn btn-warning" name="eat" value="eat">Eat</button>
+      <button type="submit" class="btn btn-warning" name="play" value="play">Play</button>
+      <button type="submit" class="btn btn-warning" name="stay_home" value="stay_home">Stay home</button>
+      <button type="submit" class="btn btn-warning" name="groomer" value="groomer">Go to groomer</button>
+    </form>
+    </div>
+    <div class="avatar">
+      <h3><%= get('pre_text') %></h3>
+      <img src="public/dog.png" alt="dog">
+    </div>
+  </section>
+</main>
+</body>
+</html>

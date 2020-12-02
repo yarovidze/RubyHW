@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Tamagotchi Game</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <link rel="stylesheet" href="/public/style.css">
+</head>
+<body class="container">
+<div class="wrapper">
+
+  <div class="input-box">
+    <h2>Welcome to game Tamagotchi!</h2>
+    <form action="/welcome" method="get">
+      <div>
+        <input type="text" placeholder="Enter pet name" name="pet_name" required="">
+      </div>
+      <div class="button-full">
+      <button class="btn btn-warning" type="submit">
+        Start
+      </button>
+      </div>
+    </form>
+  </div>
+</div>
+</body>
+</html>
